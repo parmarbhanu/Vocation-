@@ -175,13 +175,12 @@ app.get('/getjobs',(req, res)=>{
 const PORT=process.env.PORT;
 
 // to deploy
-if(process.env.NODE_ENV=="production"){
     app.use(express.static("client/build"));
     const path = require("path");
     app.get("*",(req,res)=>{
         res.sendFile(path.resolve(_dirname,'client','build','index.html'));
     })
-}
+
 
 app.listen(PORT,() => {
     console.log('Backend was connected at port ',PORT);
