@@ -3,6 +3,7 @@ import cors from "cors"
 import mongoose from "mongoose"
 import bcrypt from "bcryptjs";
 import axios from "axios";
+import  cheerio  from "cheerio";
 import 'dotenv/config'
 
 const app = express()
@@ -174,12 +175,13 @@ app.get('/getjobs',(req, res)=>{
 const PORT=process.env.PORT;
 
 // to deploy
-    app.use(express.static("build"));
-    import path from "path";
+if(process.env.NODE_ENV=="production"){
+    app.use(express.static("client/build"));
+    const path = require("path");
     app.get("*",(req,res)=>{
-        res.sendFile(path.resolve(_dirname,'build','index.html'));
+        res.sendFile(path.resolve(_dirname,'client','build','index.html'));
     })
-
+}
 
 app.listen(PORT,() => {
     console.log('Backend was connected at port ',PORT);
